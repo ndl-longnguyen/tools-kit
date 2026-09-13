@@ -4,6 +4,9 @@ const FAVORITES_KEY = 'textkit_favorites'
 const RECENTS_KEY = 'textkit_recently_used'
 const MAX_RECENTS = 10
 
+const EMPTY_ARRAY: string[] = []
+export const getServerSnapshot = () => EMPTY_ARRAY
+
 let cachedFavorites: string[] = []
 let cachedFavoritesRaw: string | null = null
 
@@ -11,15 +14,15 @@ let cachedRecents: string[] = []
 let cachedRecentsRaw: string | null = null
 
 export function getFavorites(): string[] {
-  if (typeof window === 'undefined') return []
+  if (typeof window === 'undefined') return EMPTY_ARRAY
   try {
     const raw = localStorage.getItem(FAVORITES_KEY)
     if (raw === cachedFavoritesRaw) return cachedFavorites
     cachedFavoritesRaw = raw
-    cachedFavorites = raw ? JSON.parse(raw) : []
+    cachedFavorites = raw ? JSON.parse(raw) : EMPTY_ARRAY
     return cachedFavorites
   } catch {
-    return []
+    return EMPTY_ARRAY
   }
 }
 
@@ -65,15 +68,15 @@ export function isFavorite(slug: string): boolean {
 }
 
 export function getRecentlyUsed(): string[] {
-  if (typeof window === 'undefined') return []
+  if (typeof window === 'undefined') return EMPTY_ARRAY
   try {
     const raw = localStorage.getItem(RECENTS_KEY)
     if (raw === cachedRecentsRaw) return cachedRecents
     cachedRecentsRaw = raw
-    cachedRecents = raw ? JSON.parse(raw) : []
+    cachedRecents = raw ? JSON.parse(raw) : EMPTY_ARRAY
     return cachedRecents
   } catch {
-    return []
+    return EMPTY_ARRAY
   }
 }
 

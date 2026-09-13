@@ -11,6 +11,7 @@ import {
   subscribeFavorites,
   getRecentlyUsed,
   subscribeRecents,
+  getServerSnapshot,
 } from '@/lib/storage/userPreferences'
 import {
   Search,
@@ -28,8 +29,8 @@ import {
 export default function HomePage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const isMac = typeof navigator !== 'undefined' ? navigator.platform.toUpperCase().indexOf('MAC') >= 0 : true
-  const favSlugs = useSyncExternalStore(subscribeFavorites, getFavorites, () => [])
-  const recentSlugs = useSyncExternalStore(subscribeRecents, getRecentlyUsed, () => [])
+  const favSlugs = useSyncExternalStore(subscribeFavorites, getFavorites, getServerSnapshot)
+  const recentSlugs = useSyncExternalStore(subscribeRecents, getRecentlyUsed, getServerSnapshot)
 
   const favorites = useMemo(() => {
     return favSlugs

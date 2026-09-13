@@ -5,14 +5,14 @@ import Link from 'next/link'
 import { Star, ShieldCheck, ChevronRight } from 'lucide-react'
 import { ToolDefinition } from '@/data/tools'
 import { CATEGORIES } from '@/data/categories'
-import { getFavorites, subscribeFavorites, toggleFavorite } from '@/lib/storage/userPreferences'
+import { getFavorites, subscribeFavorites, toggleFavorite, getServerSnapshot } from '@/lib/storage/userPreferences'
 
 interface ToolHeaderProps {
   tool: ToolDefinition
 }
 
 export function ToolHeader({ tool }: ToolHeaderProps) {
-  const favorites = useSyncExternalStore(subscribeFavorites, getFavorites, () => [])
+  const favorites = useSyncExternalStore(subscribeFavorites, getFavorites, getServerSnapshot)
   const favorite = favorites.includes(tool.slug)
   const category = CATEGORIES.find((c) => c.slug === tool.category)
 

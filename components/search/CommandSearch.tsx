@@ -10,6 +10,7 @@ import {
   subscribeRecents,
   getFavorites,
   subscribeFavorites,
+  getServerSnapshot,
 } from '@/lib/storage/userPreferences'
 
 interface CommandSearchProps {
@@ -23,8 +24,8 @@ export function CommandSearch({ isOpen, onClose }: CommandSearchProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const recentSlugs = useSyncExternalStore(subscribeRecents, getRecentlyUsed, () => [])
-  const favSlugs = useSyncExternalStore(subscribeFavorites, getFavorites, () => [])
+  const recentSlugs = useSyncExternalStore(subscribeRecents, getRecentlyUsed, getServerSnapshot)
+  const favSlugs = useSyncExternalStore(subscribeFavorites, getFavorites, getServerSnapshot)
 
   useEffect(() => {
     if (isOpen) {
